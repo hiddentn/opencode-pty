@@ -26,8 +26,8 @@ export async function settle(terminal: Terminal, maxMs: number) {
 }
 
 function status(terminal: Terminal) {
-  if (!terminal.exit) return `running (pid ${terminal.process.pid})`
-  if (terminal.exit.signal) return `exited by signal ${terminal.exit.signal}`
+  if (!terminal.exit) return `is running (pid ${terminal.process.pid})`
+  if (terminal.exit.signal) return `was stopped by ${terminal.exit.signal}`
   return `exited with code ${terminal.exit.code}`
 }
 
@@ -120,7 +120,7 @@ export function registerTools(editor: Editor, ctx: Context, manager: Manager) {
       const terminal = manager.spawn({ ...input, sessionID: context.sessionID, cwd })
       await settle(terminal, input.wait ?? 1000)
       return {
-        content: `Terminal ${terminal.id} "${terminal.title}" is ${status(terminal)}.\n\n${fresh(terminal)}`,
+        content: `Terminal ${terminal.id} "${terminal.title}" ${status(terminal)}.\n\n${fresh(terminal)}`,
         metadata: { id: terminal.id, pid: terminal.process.pid },
       }
     },
@@ -165,7 +165,7 @@ export function registerTools(editor: Editor, ctx: Context, manager: Manager) {
       manager.write(terminal.id, text + keys)
       terminal.lastOutputAt = Date.now()
       await settle(terminal, input.wait ?? 1000)
-      return { content: `Terminal ${terminal.id} is ${status(terminal)}.\n\n${fresh(terminal)}` }
+      return { content: `Terminal ${terminal.id} ${status(terminal)}.\n\n${fresh(terminal)}` }
     },
   })
 
@@ -201,7 +201,7 @@ export function registerTools(editor: Editor, ctx: Context, manager: Manager) {
       }
       const terminal = require(input.id)
       await terminal.screen.flush()
-      const header = `Terminal ${terminal.id} "${terminal.title}" is ${status(terminal)}.`
+      const header = `Terminal ${terminal.id} "${terminal.title}" ${status(terminal)}.`
 
       if (input.screen) {
         const view = terminal.screen.viewport()
@@ -245,7 +245,7 @@ export function registerTools(editor: Editor, ctx: Context, manager: Manager) {
       if (!terminals.length) return { content: "No terminals." }
       return {
         content: terminals
-          .map((t) => `${t.id}  ${status(t)}  "${t.title}"  in ${t.cwd}  (${t.screen.lines().length} lines)`)
+          .map((t) => `${t.id}  ${status(t).replace(/^is /, "")}  "${t.title}"  in ${t.cwd}  (${t.screen.lines().length} lines)`)
           .join("\n"),
       }
     },
@@ -274,7 +274,7 @@ export function registerTools(editor: Editor, ctx: Context, manager: Manager) {
       await settle(terminal, 0)
       const tail = fresh(terminal)
       if (input.remove) manager.remove(terminal.id)
-      return { content: `Terminal ${terminal.id} is ${status(terminal)}${input.remove ? " and was removed" : ""}.\n\n${tail}` }
+      return { content: `Terminal ${terminal.id} ${status(terminal)}${input.remove ? " and was removed" : ""}.\n\n${tail}` }
     },
   })
 }
