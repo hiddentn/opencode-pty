@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "bun scripts/build-tui.ts",
+    "build:tui": "bun scripts/build-tui.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test"
   },

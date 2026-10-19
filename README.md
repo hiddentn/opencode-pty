@@ -91,14 +91,15 @@ from `@hiddentn/opencode-pty/rpc`.
 git clone https://github.com/hiddentn/opencode-pty
 cd opencode-pty
 npm install
-npm run build
+npm run build:tui
 npm run typecheck
 npm test
 ```
 
 OpenCode compiles Solid JSX only for plugin files outside `node_modules`, so the TUI is shipped precompiled in
-`dist/tui.js`. Run `npm run build` after changing `src/tui.tsx` and commit the result; a test fails when `dist/` is
-out of date.
+`dist/tui.js`. Run `npm run build:tui` after changing `src/tui.tsx` and commit the result; a test fails when `dist/` is
+out of date. The script is not named `build` on purpose: npm would then run a full development install
+whenever the plugin is installed from git.
 
 To try local changes, add the clone's absolute path to a project's `plugins`.
 
