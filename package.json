@@ -1,0 +1,69 @@
+{
+  "name": "@hiddentn/opencode-pty",
+  "version": "0.1.0",
+  "description": "OpenCode V2 plugin that gives the agent interactive terminals, with a live terminal panel in the TUI",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "pty",
+    "terminal",
+    "repl"
+  ],
+  "license": "MIT",
+  "author": "Mohamed Amine <hiddentn@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentn/opencode-pty.git"
+  },
+  "homepage": "https://github.com/hiddentn/opencode-pty#readme",
+  "bugs": "https://github.com/hiddentn/opencode-pty/issues",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./tui": "./tui.tsx",
+    "./rpc": "./src/rpc.ts"
+  },
+  "files": [
+    "index.ts",
+    "tui.tsx",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@opencode/plugin": "^2.0.32",
+    "@xterm/headless": "^6.0.0"
+  },
+  "peerDependencies": {
+    "@opentui/core": ">=0.5.17",
+    "@opentui/solid": ">=0.5.17",
+    "node-pty": ">=1.0.0",
+    "solid-js": ">=1.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@opentui/core": {
+      "optional": true
+    },
+    "@opentui/solid": {
+      "optional": true
+    },
+    "node-pty": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@opencode/theme": "2.0.32",
+    "@opentui/core": "0.5.17",
+    "@opentui/solid": "0.5.17",
+    "@types/bun": "^1.4.3",
+    "@types/node": "^26.6.5",
+    "node-pty": "^1.1.0",
+    "solid-js": "1.9.12",
+    "typescript": "^5.9.3"
+  }
+}
